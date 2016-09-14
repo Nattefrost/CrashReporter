@@ -21,4 +21,7 @@ public class ExceptionLog {
     public Date getDate() {
         return mDate;
     }
+    public void Save(){
+
+    }
 }

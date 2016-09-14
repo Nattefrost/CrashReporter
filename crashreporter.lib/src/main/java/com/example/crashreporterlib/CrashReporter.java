@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Benoit on 14/09/2016.
  */
-public class CrashReporter {
+public class CrashReporter  {
     private static CrashReporter sReporter;
     private Application mApp;
 
