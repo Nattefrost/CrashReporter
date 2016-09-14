@@ -7,14 +7,14 @@ import java.util.Date;
  */
 public class ExceptionLog {
 
-    private string mStacktrace;
+    private String mStacktrace;
     private Date mDate;
 
-    ExceptionLog (string stackTrace,Date date){
+    ExceptionLog (String stackTrace,Date date){
         this.mDate=date;
         this.mStacktrace=stackTrace;
     }
-    public string getStacktrace() {
+    public String getStacktrace() {
         return mStacktrace;
     }
 

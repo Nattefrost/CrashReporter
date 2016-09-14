@@ -12,15 +12,19 @@ public class CrashReporter {
     private Application mApp;
 
     private CrashReporter(Application app){
+        this.mApp=app;
+
+        Thread.setDefaultUncaughtExceptionHandler(CrashHandler);
+
 
     }
     public static void init(Application app){
-        if( _reporter == null) _reporter = new CrashReporter(app);
+        if( sReporter == null) sReporter = new CrashReporter(app);
     }
     public static List<ExceptionLog> getExceptions(){
         return null;
     }
-    public static void sendExceptions(string mail){
+    public static void sendExceptions(String mail){
     }
     public static void reset(){
 
