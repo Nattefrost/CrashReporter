@@ -1,11 +1,17 @@
 package com.example.crashreporterlib;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.Environment;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.Properties;
 
 import static android.support.v4.app.ActivityCompat.startActivity;
 
@@ -63,11 +69,15 @@ public class CrashReporter  {
         StringBuilder sb = new StringBuilder();
         List<ExceptionLog> reportList = DbHandler.getAllReports();
         for (ExceptionLog report : reportList) {
-            sb.append("CRASH DATE : " + report.getDate( ));
-            sb.append(System.getProperty("line.separator"));
+            sb.append("CRASH DATE : " + report.getDate());
+            sb.append(System.getProperty("line.separator" ));
             sb.append(report.getStacktrace());
-            sb.append("########################################## LOG END ##########################################");
+            sb.append("########################################## LOG END ##########################################" );
         }
+        String deviceInfo = getInfoAboutDevice();
+        sb.append("DEVICE INFOS : ");
+        sb.append(System.getProperty("line.separator" ));
+        sb.append(deviceInfo);
 
         String body = sb.toString();
         // Process all the reports
@@ -76,8 +86,37 @@ public class CrashReporter  {
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Application crash report");
         emailIntent.putExtra(Intent.EXTRA_TEXT, body);
         getReporter().mApp.startActivity(Intent.createChooser(emailIntent, "Send email..."));
+
         reset();
 
+    }
+
+    /** Retrieves information about device
+     * @return string describing various device information
+     * Adapted from https://github.com/simon-heinen/SimpleUi/blob/master/SimpleUI/srcAndroid/simpleui/util/DeviceInformation.java
+     */
+    public static String getInfoAboutDevice() {
+        String s = "";
+
+        s += "\n OS Version: " + System.getProperty("os.version") + " ("
+                + android.os.Build.VERSION.INCREMENTAL + ")";
+        s += "\n OS API Level: " + android.os.Build.VERSION.SDK;
+        s += "\n Device: " + android.os.Build.DEVICE;
+        s += "\n Model (and Product): " + android.os.Build.MODEL + " ("
+                + android.os.Build.PRODUCT + ")";
+
+        s += "\n Manufacturer: " + android.os.Build.MANUFACTURER;
+        s += "\n Other TAGS: " + android.os.Build.TAGS;
+        s += "\n SD Card state: " + Environment.getExternalStorageState();
+
+        Properties p = System.getProperties();
+        Enumeration keys = p.keys();
+        String key = "";
+        while (keys.hasMoreElements()) {
+            key = (String) keys.nextElement();
+            s += "\n > " + key + " = " + (String) p.get(key);
+        }
+        return s;
     }
 
     /** Removes all the crashes logged in the DB
