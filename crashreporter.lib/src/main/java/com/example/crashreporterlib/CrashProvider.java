@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
@@ -13,27 +14,28 @@ import android.support.annotation.Nullable;
  * Created by Benoit on 15/09/2016.
  */
 public class CrashProvider extends ContentProvider {
-    Application mCtx;
+    Context mCtx;
     DbHandler mDb;
-    final String AUTHORITY;
-    final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-    final Uri CONTENT_URI;
+    String AUTHORITY;
+    UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+    Uri CONTENT_URI;
     final int TASKS_LIST = 1;
     final int TASKS_ITEM = 2;
-    final String CONTENT_TYPE ;
-    final String CONTENT_ITEM_TYPE ;
+    String CONTENT_TYPE ;
+    String CONTENT_ITEM_TYPE ;
     final String TABLE = DbHandler.TABLE_REPORTS;
 
-    public CrashProvider(Application app){
-        mCtx = app;
+    public CrashProvider(){
+        super();
+    }
+    @Override
+    public boolean onCreate() {
+        mCtx = getContext();
+        mDb = new DbHandler(mCtx);
         AUTHORITY =  mCtx.getPackageName();
         CONTENT_URI = Uri.parse("content://"+AUTHORITY+"/"+ TABLE);
         CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/CrashReporter.Reports";
         CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/CrashReporter/Reports";
-    }
-    @Override
-    public boolean onCreate() {
-        mDb = new DbHandler(mCtx);
         return true;
     }
 

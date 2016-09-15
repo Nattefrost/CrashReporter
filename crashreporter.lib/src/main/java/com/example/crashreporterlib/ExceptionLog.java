@@ -12,17 +12,17 @@ public class ExceptionLog {
     private Date mDate;
     private int mId;
 
-    ExceptionLog (String stackTrace,Date date){
+    public ExceptionLog (String stackTrace,Date date){
         this.mId=-1;
         this.mDate=date;
         this.mStacktrace=stackTrace;
     }
-    ExceptionLog (int id, String stackTrace,Date date){
+    public ExceptionLog (int id, String stackTrace,Date date){
         this.mId=id;
         this.mDate=date;
         this.mStacktrace=stackTrace;
     }
-
+    public int getId(){return  mId ;}
     public String getStacktrace() {
         return mStacktrace;
     }
