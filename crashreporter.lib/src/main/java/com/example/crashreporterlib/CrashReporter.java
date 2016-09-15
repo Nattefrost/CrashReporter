@@ -10,11 +10,13 @@ import java.util.List;
 public class CrashReporter  {
     private static CrashReporter sReporter;
     private Application mApp;
+    private Thread.UncaughtExceptionHandler mDefaultHandler;
 
     private CrashReporter(Application app){
         this.mApp=app;
 
-        Thread.setDefaultUncaughtExceptionHandler(CrashHandler);
+        mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
+        Thread.setDefaultUncaughtExceptionHandler(new CrashHandler(mDefaultHandler));
 
 
     }
