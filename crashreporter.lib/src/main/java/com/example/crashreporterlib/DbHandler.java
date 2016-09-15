@@ -113,7 +113,7 @@ public class DbHandler extends SQLiteOpenHelper {
         db.close();
         return reportList;
     }
-    
+
     public static Cursor getExceptionsCursor(){
         DbHandler dh = new DbHandler(CrashReporter.getReporter().getApp());
         List<ExceptionLog> reportList = new ArrayList<>();

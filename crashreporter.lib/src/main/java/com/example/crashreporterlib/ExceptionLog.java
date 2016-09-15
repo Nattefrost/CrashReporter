@@ -34,7 +34,7 @@ public class ExceptionLog {
     /**Saves the object to the database
      **/
     public void Save(){
-
+        DbHandler.addReport(this);
     }
 
 }
