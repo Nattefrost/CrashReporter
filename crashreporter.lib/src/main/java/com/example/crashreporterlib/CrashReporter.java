@@ -78,9 +78,13 @@ public class CrashReporter  {
         // Process all the reports
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                                         "mailto", targetMail, null));
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Application crash report");
+
+        //emailIntent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Application crash reports");
         emailIntent.putExtra(Intent.EXTRA_TEXT, body);
-        getReporter().mApp.startActivity(Intent.createChooser(emailIntent, "Send email..."));
+        Intent chooser = Intent.createChooser(emailIntent, "Send email...");
+        chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        getReporter().mApp.startActivity(chooser);
 
         reset();
 
