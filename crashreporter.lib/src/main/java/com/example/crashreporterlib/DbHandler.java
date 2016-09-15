@@ -31,7 +31,7 @@ public class DbHandler extends SQLiteOpenHelper {
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE REPORTS(id PRIMARY KEY UNIQUE AUTOINCREMENT NOT NULL, stack_trace TEXT NOT NULL, crash_date TEXT NOT NULL );";
+        String CREATE_CONTACTS_TABLE = "CREATE TABLE REPORTS(id INTEGER PRIMARY KEY AUTOINCREMENT , stack_trace TEXT NOT NULL, crash_date TEXT NOT NULL );";
         db.execSQL(CREATE_CONTACTS_TABLE);
         db.close();
     }

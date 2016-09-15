@@ -9,10 +9,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="intech.crashreporter.MainActivity"
     android:background="@android:color/holo_blue_bright">
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CrashApp"
-        android:id="@+id/crashButton1"/>
+        android:text="@string/check_logs"
+        android:id="@+id/checkLogs"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/crashapp"
+        android:id="@+id/crashButton1"
+        android:layout_below="@+id/checkLogs"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
