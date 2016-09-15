@@ -7,10 +7,12 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="intech.crashreporter.MainActivity">
+    tools:context="intech.crashreporter.MainActivity"
+    android:background="@android:color/holo_blue_bright">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="CrashApp"
+        android:id="@+id/crashButton1"/>
 </RelativeLayout>
