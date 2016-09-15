@@ -1,1 +1,1 @@
-include ':app', ':crashreporter.lib'
+include ':app', ':crashreporter.lib', ':multipleappscrashviewer'
