@@ -33,7 +33,7 @@ public class DbHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_CONTACTS_TABLE = "CREATE TABLE IF NOT EXISTS REPORTS(id INTEGER PRIMARY KEY AUTOINCREMENT , stack_trace TEXT NOT NULL, crash_date TEXT NOT NULL );";
         db.execSQL(CREATE_CONTACTS_TABLE);
-        db.close();
+        //db.close();
     }
 
     // Upgrading database, won't be used
@@ -96,8 +96,9 @@ public class DbHandler extends SQLiteOpenHelper {
     public static List<ExceptionLog> getAllReports() {
         DbHandler dh = new DbHandler(CrashReporter.getReporter().getApp());
         List<ExceptionLog> reportList = new ArrayList<>();
-        String selectQuery = "SELECT * FROM" + TABLE_REPORTS + ";";
+        String selectQuery = "SELECT * FROM " + TABLE_REPORTS + " ;";
         SQLiteDatabase db = dh.getReadableDatabase();
+        
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {

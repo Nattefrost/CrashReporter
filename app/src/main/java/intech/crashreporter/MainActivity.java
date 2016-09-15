@@ -1,6 +1,7 @@
 package intech.crashreporter;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +14,6 @@ import com.example.crashreporterlib.ExceptionLog;
 import java.util.List;
 
 public class MainActivity extends Activity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 List<ExceptionLog> errors = DbHandler.getAllReports();
-                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
                 if(errors.size() ==0){
                     builder.setMessage("No Errors to display")
