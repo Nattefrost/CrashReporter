@@ -42,7 +42,7 @@ public class DbHandler extends SQLiteOpenHelper {
     //endregion
 
     /** Inserts Report into DB
-     *
+     * @param report An ExceptionLog object
      * @see ExceptionLog
      */
     public static void addReport(ExceptionLog report) {
@@ -76,6 +76,7 @@ public class DbHandler extends SQLiteOpenHelper {
         db.close();
         return new ExceptionLog(reportId, stackTrace, reportDate);
     }
+
     /** Gets a single Report by id
      *
      * @return Cursor
@@ -86,6 +87,7 @@ public class DbHandler extends SQLiteOpenHelper {
         String query = "SELECT * FROM" + TABLE_REPORTS + "WHERE" + KEY_ID + "=" + id + ";";
         return db.rawQuery(query, null);
     }
+
     /** Gets a list of all Reports in DB
      *
      * @return List of ExceptionLog
@@ -111,6 +113,7 @@ public class DbHandler extends SQLiteOpenHelper {
         db.close();
         return reportList;
     }
+    
     public static Cursor getExceptionsCursor(){
         DbHandler dh = new DbHandler(CrashReporter.getReporter().getApp());
         List<ExceptionLog> reportList = new ArrayList<>();
@@ -118,6 +121,7 @@ public class DbHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = dh.getReadableDatabase();
         return db.rawQuery(selectQuery, null);
     }
+
     /** Cleans the whole db
      *
      * @see ExceptionLog
