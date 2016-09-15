@@ -2,6 +2,7 @@ package intech.crashreporter;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -34,17 +35,34 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 List<ExceptionLog> errors = DbHandler.getAllReports();
-                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-
+                final AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                AlertDialog dialog;
                 if(errors.size() ==0){
                     builder.setMessage("No Errors to display")
-                            .setTitle("No Errors");
-                }
-                else{
+                            .setTitle("No Errors")
+                            .setNegativeButton("Good then", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                } else{
+
                     builder.setMessage(errors.size() + " Errors to display")
-                            .setTitle("Errors");
+                            .setTitle("Errors")
+                            .setPositiveButton("Send the stacktrace", new DialogInterface.OnClickListener()
+                            {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    CrashReporter.sendExceptions("escande.d@gmail.com");
+                                }
+                            }).setNegativeButton("Not today", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
                 }
-                AlertDialog dialog = builder.create();
+                dialog = builder.create();
                 dialog.show();
             }
         });
