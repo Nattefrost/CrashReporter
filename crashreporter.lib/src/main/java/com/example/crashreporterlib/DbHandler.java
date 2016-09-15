@@ -26,7 +26,7 @@ public class DbHandler extends SQLiteOpenHelper {
     public DbHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
+    // region Overriding parent
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -37,11 +37,14 @@ public class DbHandler extends SQLiteOpenHelper {
 
     // Upgrading database, won't be used
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS" + TABLE_REPORTS);
-        onCreate(db);
-    }
-    // Add a report
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
+    //endregion
+
+    /** Inserts Report into DB
+     *
+     * @return void
+     * @see ExceptionLog
+     */
     public static void addReport(ExceptionLog report) {
         DbHandler dh = new DbHandler(CrashReporter.getReporter().getApp());
         SQLiteDatabase db = dh.getWritableDatabase();
@@ -55,10 +58,15 @@ public class DbHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    /** Gets a single Report by id
+     *
+     * @return ExceptionLog
+     * @see ExceptionLog
+     */
     public static ExceptionLog getReportById(int id) {
         DbHandler dh = new DbHandler(CrashReporter.getReporter().getApp());
         SQLiteDatabase db = dh.getReadableDatabase();
-        String query = "SELECT * FROM" + TABLE_REPORTS + "WHERE" + KEY_ID + "=" + id;
+        String query = "SELECT * FROM" + TABLE_REPORTS + "WHERE" + KEY_ID + "=" + id + ";";
         Cursor cursor = db.rawQuery(query, null);
         int reportId = cursor.getInt(0);
         String stackTrace = cursor.getString(1);
@@ -69,11 +77,16 @@ public class DbHandler extends SQLiteOpenHelper {
     }
 
     // Getting All Contacts
+    /** Gets a list of all Reports in DB
+     *
+     * @return List of ExceptionLog
+     * @see ExceptionLog
+     */
     public static List<ExceptionLog> getAllReports() {
         DbHandler dh = new DbHandler(CrashReporter.getReporter().getApp());
         List<ExceptionLog> reportList = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + TABLE_REPORTS;
-        SQLiteDatabase db = dh.getWritableDatabase();
+        String selectQuery = "SELECT * FROM" + TABLE_REPORTS + ";";
+        SQLiteDatabase db = dh.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
@@ -90,10 +103,14 @@ public class DbHandler extends SQLiteOpenHelper {
         return reportList;
     }
 
-
+    /** Cleans the whole db
+     *
+     * @return void
+     * @see ExceptionLog
+     */
     public static void deleteAllReports() {
         DbHandler dh = new DbHandler(CrashReporter.getReporter().getApp());
-        SQLiteDatabase db = dh.getReadableDatabase();
+        SQLiteDatabase db = dh.getWritableDatabase();
         String DELETE_ALL_CONTACTS = "DELETE FROM" + TABLE_REPORTS + "WHERE id >= 0;";
         db.execSQL(DELETE_ALL_CONTACTS);
         db.close();
