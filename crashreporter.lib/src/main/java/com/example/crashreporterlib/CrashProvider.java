@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.OperationApplicationException;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
@@ -23,12 +22,11 @@ public class CrashProvider extends ContentProvider {
     final int TASKS_ITEM = 2;
     final String CONTENT_TYPE ;
     final String CONTENT_ITEM_TYPE ;
-    final String TABLE;
+    final String TABLE = DbHandler.TABLE_REPORTS;
 
     public CrashProvider(Application app){
         mCtx = app;
         AUTHORITY =  mCtx.getPackageName();
-        TABLE = "REPORTS";
         CONTENT_URI = Uri.parse("content://"+AUTHORITY+"/"+ TABLE);
         CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/CrashReporter.Reports";
         CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/CrashReporter/Reports";
@@ -36,19 +34,41 @@ public class CrashProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         mDb = new DbHandler(mCtx);
-        return mDb != null;
+        return true;
     }
 
     @Nullable
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        return null;
+        Cursor cursor;
+        switch (uriMatcher.match(uri)) {
+            case TASKS_LIST:
+                cursor = DbHandler.getExceptionsCursor();
+                break;
+
+            case TASKS_ITEM:
+                cursor = DbHandler.getExceptionCursorById(Integer.parseInt(uri.getLastPathSegment()));
+                break;
+
+            default:
+                throw new IllegalArgumentException("Invalid URI: " + uri);
+        }
+        return cursor;
     }
 
     @Nullable
     @Override
     public String getType(Uri uri) {
-        return null;
+        switch (uriMatcher.match(uri)) {
+            case TASKS_LIST:
+                return CONTENT_TYPE;
+
+            case TASKS_ITEM:
+                return CONTENT_ITEM_TYPE;
+
+            default:
+                throw new IllegalArgumentException("Invalid URI: "+uri);
+        }
     }
     //region useless part
     @Nullable

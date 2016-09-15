@@ -16,12 +16,12 @@ import java.util.List;
  */
 public class DbHandler extends SQLiteOpenHelper {
     // STATIC VARS
-    private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "reports";
-    private static final String TABLE_REPORTS = "REPORTS";
-    private static final String KEY_ID = "id";
-    private static final String KEY_STACK_TRACE = "stack_trace";
-    private static final String KEY_DATE = "crash_date";
+    public static final int DATABASE_VERSION = 1;
+    public static final String DATABASE_NAME = "reports";
+    public static final String TABLE_REPORTS = "REPORTS";
+    public static final String KEY_ID = "id";
+    public static final String KEY_STACK_TRACE = "stack_trace";
+    public static final String KEY_DATE = "crash_date";
 
     public DbHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -75,8 +75,16 @@ public class DbHandler extends SQLiteOpenHelper {
         db.close();
         return new ExceptionLog(reportId, stackTrace, reportDate);
     }
-
-    // Getting All Contacts
+    /** Gets a single Report by id
+     *
+     * @return Cursor
+     */
+    public static Cursor getExceptionCursorById(int id){
+        DbHandler dh = new DbHandler(CrashReporter.getReporter().getApp());
+        SQLiteDatabase db = dh.getReadableDatabase();
+        String query = "SELECT * FROM" + TABLE_REPORTS + "WHERE" + KEY_ID + "=" + id + ";";
+        return db.rawQuery(query, null);
+    }
     /** Gets a list of all Reports in DB
      *
      * @return List of ExceptionLog
@@ -102,7 +110,13 @@ public class DbHandler extends SQLiteOpenHelper {
         db.close();
         return reportList;
     }
-
+    public static Cursor getExceptionsCursor(){
+        DbHandler dh = new DbHandler(CrashReporter.getReporter().getApp());
+        List<ExceptionLog> reportList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM" + TABLE_REPORTS + ";";
+        SQLiteDatabase db = dh.getReadableDatabase();
+        return db.rawQuery(selectQuery, null);
+    }
     /** Cleans the whole db
      *
      * @see ExceptionLog
