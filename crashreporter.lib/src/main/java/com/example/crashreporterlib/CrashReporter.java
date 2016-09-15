@@ -9,7 +9,7 @@ import java.util.List;
  * Class that handles the Crash reporting of an Android application built s Singleton
  */
 public class CrashReporter  {
-    static CrashReporter getsReporter() {
+    static CrashReporter getReporter() {
         return sReporter;
     }
 
