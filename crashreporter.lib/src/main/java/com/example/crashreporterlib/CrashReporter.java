@@ -1,8 +1,13 @@
 package com.example.crashreporterlib;
 
 import android.app.Application;
+import android.content.Intent;
+import android.net.Uri;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static android.support.v4.app.ActivityCompat.startActivity;
 
 /**
  * Created by Benoit on 14/09/2016.
@@ -50,11 +55,27 @@ public class CrashReporter  {
     }
 
     /**Sends all the crashes logged in the DB to the provided email
-     * @param mail the address to send the mail to
+     *
+     * @param targetMail the address to send the mail to
      */
-    public static void sendExceptions(String mail){
+    public static void sendExceptions(String targetMail){
 
+        StringBuilder sb = new StringBuilder();
+        List<ExceptionLog> reportList = DbHandler.getAllReports();
+        for (ExceptionLog report : reportList) {
+            sb.append("CRASH DATE : " + report.getDate( ));
+            sb.append(System.getProperty("line.separator"));
+            sb.append(report.getStacktrace());
+            sb.append("########################################## LOG END ##########################################");
+        }
 
+        String body = sb.toString();
+        // Process all the reports
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                                        "mailto", targetMail, null));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Application crash report");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, body);
+        getReporter().mApp.startActivity(Intent.createChooser(emailIntent, "Send email..."));
         reset();
 
     }

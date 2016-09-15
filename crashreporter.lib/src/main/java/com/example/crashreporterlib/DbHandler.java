@@ -42,7 +42,6 @@ public class DbHandler extends SQLiteOpenHelper {
 
     /** Inserts Report into DB
      *
-     * @return void
      * @see ExceptionLog
      */
     public static void addReport(ExceptionLog report) {
@@ -61,6 +60,7 @@ public class DbHandler extends SQLiteOpenHelper {
     /** Gets a single Report by id
      *
      * @return ExceptionLog
+     * @param id ID of the ExceptionLog you want to retrieve
      * @see ExceptionLog
      */
     public static ExceptionLog getReportById(int id) {
@@ -105,14 +105,13 @@ public class DbHandler extends SQLiteOpenHelper {
 
     /** Cleans the whole db
      *
-     * @return void
      * @see ExceptionLog
      */
     public static void deleteAllReports() {
         DbHandler dh = new DbHandler(CrashReporter.getReporter().getApp());
         SQLiteDatabase db = dh.getWritableDatabase();
-        String DELETE_ALL_CONTACTS = "DELETE FROM" + TABLE_REPORTS + "WHERE id >= 0;";
-        db.execSQL(DELETE_ALL_CONTACTS);
+        String DELETE_ALL_REPORTS = "DELETE FROM" + TABLE_REPORTS + "WHERE id >= 0;";
+        db.execSQL(DELETE_ALL_REPORTS);
         db.close();
     }
 }
