@@ -89,10 +89,12 @@ public class DbHandler extends SQLiteOpenHelper {
         db.close();
         return reportList;
     }
-    
 
-    public static void deleteAllReports(SQLiteDatabase db) {
-        String DELETE_ALL_CONTACTS = "DELETE FROM REPORTS WHERE id >= 0;";
+
+    public static void deleteAllReports() {
+        DbHandler dh = new DbHandler(CrashReporter.getReporter().getApp());
+        SQLiteDatabase db = dh.getReadableDatabase();
+        String DELETE_ALL_CONTACTS = "DELETE FROM" + TABLE_REPORTS + "WHERE id >= 0;";
         db.execSQL(DELETE_ALL_CONTACTS);
         db.close();
     }
