@@ -66,7 +66,7 @@ public class DbHandler extends SQLiteOpenHelper {
     public static ExceptionLog getReportById(int id) {
         DbHandler dh = new DbHandler(CrashReporter.getReporter().getApp());
         SQLiteDatabase db = dh.getReadableDatabase();
-        String query = "SELECT * FROM" + TABLE_REPORTS + "WHERE" + KEY_ID + "=" + id;
+        String query = "SELECT * FROM" + TABLE_REPORTS + "WHERE" + KEY_ID + "=" + id + ";";
         Cursor cursor = db.rawQuery(query, null);
         int reportId = cursor.getInt(0);
         String stackTrace = cursor.getString(1);
@@ -85,7 +85,7 @@ public class DbHandler extends SQLiteOpenHelper {
     public static List<ExceptionLog> getAllReports() {
         DbHandler dh = new DbHandler(CrashReporter.getReporter().getApp());
         List<ExceptionLog> reportList = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + TABLE_REPORTS;
+        String selectQuery = "SELECT * FROM" + TABLE_REPORTS + ";";
         SQLiteDatabase db = dh.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
