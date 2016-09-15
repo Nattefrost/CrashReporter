@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
                             {
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
-                                    CrashReporter.sendExceptions("xxxxx@intechinfo.fr");
+                                    CrashReporter.sendExceptions("escande@intechinfo.fr");
                                 }
                             }).setNegativeButton("Not today", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
