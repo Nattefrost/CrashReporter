@@ -1,5 +1,6 @@
 package com.example.crashreporterlib;
 
+import android.app.Application;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.OperationApplicationException;
@@ -11,9 +12,15 @@ import android.support.annotation.Nullable;
  * Created by Benoit on 15/09/2016.
  */
 public class CrashProvider extends ContentProvider {
+    Application mCtx;
+    DbHandler mDb;
+    public CrashProvider(Application app){
+        mCtx = app;
+    }
     @Override
     public boolean onCreate() {
-        return false;
+        mDb = new DbHandler(mCtx);
+        return mDb != null;
     }
 
     @Nullable
