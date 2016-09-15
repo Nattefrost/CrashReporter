@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CrashReporter</string>
+    <string name="check_logs">Check Logs</string>
+    <string name="crashapp">CrashApp</string>
 </resources>
