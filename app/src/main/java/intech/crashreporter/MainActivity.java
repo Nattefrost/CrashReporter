@@ -1,6 +1,7 @@
 package intech.crashreporter;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -14,7 +15,6 @@ import com.example.crashreporterlib.ExceptionLog;
 import java.util.List;
 
 public class MainActivity extends Activity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 List<ExceptionLog> errors = DbHandler.getAllReports();
-                final AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 AlertDialog dialog;
                 if(errors.size() ==0){
                     builder.setMessage("No Errors to display")
@@ -45,15 +45,14 @@ public class MainActivity extends Activity {
                                     dialog.cancel();
                                 }
                             });
-                } else{
-
+                } else {
                     builder.setMessage(errors.size() + " Errors to display")
                             .setTitle("Errors")
                             .setPositiveButton("Send the stacktrace", new DialogInterface.OnClickListener()
                             {
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
-                                    CrashReporter.sendExceptions("escande.d@gmail.com");
+                                    CrashReporter.sendExceptions("xxxxx@intechinfo.fr");
                                 }
                             }).setNegativeButton("Not today", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
