@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * Created by Damien Escande on 15/09/2016.
+ * Class managing some DB operations
  */
 public class DbHandler extends SQLiteOpenHelper {
     // STATIC VARS
