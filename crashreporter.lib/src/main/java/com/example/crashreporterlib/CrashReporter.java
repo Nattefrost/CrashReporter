@@ -10,6 +10,11 @@ import java.util.List;
  */
 public class CrashReporter  {
     private static CrashReporter sReporter;
+
+    Application getApp() {
+        return mApp;
+    }
+
     private Application mApp;
     private Thread.UncaughtExceptionHandler mDefaultHandler;
 
