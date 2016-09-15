@@ -1,10 +1,7 @@
 package com.example.crashreporterlib;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Environment;
 
@@ -12,8 +9,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
-
-import static android.support.v4.app.ActivityCompat.startActivity;
 
 /**
  * Created by Benoit on 14/09/2016.
