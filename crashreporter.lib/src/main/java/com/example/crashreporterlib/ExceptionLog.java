@@ -10,11 +10,19 @@ public class ExceptionLog {
 
     private String mStacktrace;
     private Date mDate;
+    private int mId;
 
     ExceptionLog (String stackTrace,Date date){
+        this.mId=-1;
         this.mDate=date;
         this.mStacktrace=stackTrace;
     }
+    ExceptionLog (int id, String stackTrace,Date date){
+        this.mId=id;
+        this.mDate=date;
+        this.mStacktrace=stackTrace;
+    }
+
     public String getStacktrace() {
         return mStacktrace;
     }
