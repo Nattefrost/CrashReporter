@@ -4,6 +4,7 @@ import java.util.Date;
 
 /**
  * Created by Benoit on 14/09/2016.
+ * Class used to store and manipulate datas rom crashes
  */
 public class ExceptionLog {
 
@@ -21,6 +22,9 @@ public class ExceptionLog {
     public Date getDate() {
         return mDate;
     }
+
+    /**Saves the object to the database
+     **/
     public void Save(){
 
     }

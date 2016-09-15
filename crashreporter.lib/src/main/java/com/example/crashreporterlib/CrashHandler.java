@@ -7,14 +7,17 @@ import java.util.GregorianCalendar;
 
 /**
  * Created by Benoit on 14/09/2016.
+ * Class that implements the UncaughtExceptionHandler, to save a crash datas into DB
  */
-public class CrashHandler implements Thread.UncaughtExceptionHandler {
-    Thread.UncaughtExceptionHandler mBaseHandler;
+class CrashHandler implements Thread.UncaughtExceptionHandler {
+    private Thread.UncaughtExceptionHandler mBaseHandler;
 
     CrashHandler(Thread.UncaughtExceptionHandler baseHandler){
         super();
         mBaseHandler = baseHandler;
     }
+    /**Retrieves all the informations of an uncaughtException then creates a string of its stackTrace nd saves it into the DB
+    **/
     @Override
     public void uncaughtException(Thread t, Throwable e) {
         //reading all lines of the stacktrace
@@ -49,8 +52,11 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
                 builder.append(";"+ System.lineSeparator());
             }
         }
+        //Create the object to save in the db
         ExceptionLog ex = new ExceptionLog(builder.toString(),new Date(System.currentTimeMillis()));
+        //Save it
         ex.Save();
+        //Calling the original handler to do his ob
         mBaseHandler.uncaughtException(t,e);
     }
 }
