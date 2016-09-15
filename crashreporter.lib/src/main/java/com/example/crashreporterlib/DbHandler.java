@@ -38,10 +38,10 @@ public class DbHandler extends SQLiteOpenHelper {
     }
     // Add a report
     public static void addReport(ExceptionLog report) {
-        SQLiteDatabase db = new DbHandler(CrashHandler.class);
+        DbHandler db = new DbHandler(CrashReporter.getReporter().getApp());
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, contact.getName());
-        values.put(KEY_PH_NO, contact.getPhoneNumber());
+        values.put(KEY_NAME, report.getStacktrace());
+        values.put(KEY_PH_NO, report.getDate());
 
         // Actually inserting
         db.insert(TABLE_REPORTS, null, values);
