@@ -28,4 +28,5 @@ public class ExceptionLog {
     public void Save(){
 
     }
+
 }

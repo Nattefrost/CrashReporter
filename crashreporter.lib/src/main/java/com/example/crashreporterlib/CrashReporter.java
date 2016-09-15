@@ -53,7 +53,7 @@ public class CrashReporter  {
     /** Removes all the crashes logged in the DB
      */
     public static void reset(){
-
+        DbHandler.deleteAllReports();
     }
 
 }
