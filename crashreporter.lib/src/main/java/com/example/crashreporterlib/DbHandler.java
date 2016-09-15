@@ -38,7 +38,7 @@ public class DbHandler extends SQLiteOpenHelper {
     }
     // Add a report
     public static void addReport(ExceptionLog report) {
-        SQLiteDatabase db = new DbHandler(CrashHandler.class);
+        DbHandler db = new DbHandler(CrashHandler.class);
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, contact.getName());
         values.put(KEY_PH_NO, contact.getPhoneNumber());
@@ -69,7 +69,8 @@ public class DbHandler extends SQLiteOpenHelper {
         return null;
     }
 
-    public static void deleteAllReports() {
-
+    public static void deleteAllReports(SQLiteDatabase db) {
+        String DELETE_ALL_CONTACTS = "DELETE FROM REPORTS WHERE id >= 0;";
+        db.execSQL(DELETE_ALL_CONTACTS);
     }
 }
