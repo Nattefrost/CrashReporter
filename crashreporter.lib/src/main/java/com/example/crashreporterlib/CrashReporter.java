@@ -34,7 +34,7 @@ public class CrashReporter  {
     }
 
     /**Instantiates an new CrashReporter
-     * @param app The application to attach th reporter to
+     * @param app The application to attach the reporter to
      */
     public static void init(Application app){
         if( sReporter == null) sReporter = new CrashReporter(app);
